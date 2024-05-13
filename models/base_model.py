@@ -1,5 +1,7 @@
 #!/usr/bin/python3
+"""Defines the BaseModel class."""
 import uuid
+import models
 from datetime import datetime
 
 class BaseModel:
@@ -37,7 +39,10 @@ class BaseModel:
         """
         Update the updated_at attribute with the current datetime.
         """
+        from models import storage
         self.updated_at = datetime.now()
+        storage.new(self)
+        storage.save()
 
     def to_dict(self):
         """
@@ -45,6 +50,6 @@ class BaseModel:
         """
         new_dict = self.__dict__.copy()
         new_dict['__class__'] = self.__class__.__name__
-        new_dict['created_t'] = self.created_at.isoformat()
-        new_dict['updated_t'] = self.updated_at.isoformat()
+        new_dict['created_at'] = self.created_at.isoformat()
+        new_dict['updated_at'] = self.updated_at.isoformat()
         return new_dict
