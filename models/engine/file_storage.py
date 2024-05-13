@@ -2,6 +2,7 @@
 import json
 import os
 from models.base_model import BaseModel
+from models.user import User
 
 class FileStorage:
     """
@@ -40,5 +41,6 @@ class FileStorage:
                 objs = json.load(f)
                 for k, v in objs.items():
                     cls_name = v['__class__']
-                    cls = eval(cls_name)
-                    self.__objects[k] = cls(**v)
+                    if cls_name in globals():
+                        cls = globals()[cls_name]
+                        self.__objects[k] = cls(**v)

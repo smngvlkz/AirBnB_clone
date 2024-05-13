@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import cmd
 from models import storage
+from models.user import User
 from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
@@ -33,12 +34,16 @@ class HBNBCommand(cmd.Cmd):
         """
         if not arg:
             print("** class name missing **")
-        elif arg != "BaseModel":
-            print("** class doesn't exist **")
-        else:
+        elif arg == "BaseModel":
             new_instance = BaseModel()
             new_instance.save()
             print(new_instance.id)
+        elif arg == "User":
+            new_instance = User()
+            new_instance.save()
+            print(new_instance.id)
+        else:
+            print("** class doesn't exist **")
 
     def do_show(self, arg):
         """
