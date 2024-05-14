@@ -49,6 +49,19 @@ class HBNBCommand(cmd.Cmd):
             command = inputs[1]
             if command == "all()":
                 self.do_all(class_name)
+            elif command == "count()":
+                self.do_count(class_name)
+
+    def do_count(self, arg):
+        """
+        To count the number of instances of a class
+        """
+        count = 0
+        all_objs = storage.all()
+        for obj_id in all_objs:
+            if arg == obj_id.split(".")[0]:
+                count += 1
+        print(count)
 
     def do_create(self, arg):
         """
