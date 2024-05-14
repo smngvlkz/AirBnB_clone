@@ -34,6 +34,22 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
+    def default(self, line):
+        """
+        Method to be called when the command prefix is not recognized on an input line
+        """
+        if len(line) == 0:
+            return
+        inputs = line.split('.')
+        class_name = inputs[0]
+        if class_name not in self.valid_classes:
+            print("** class doesn't exist **")
+            return
+        if len(inputs) > 1:
+            command = inputs[1]
+            if command == "all()":
+                self.do_all(class_name)
+
     def do_create(self, arg):
         """
         Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id.
@@ -41,7 +57,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
         elif arg in self.valid_classes:
-            new_instance = globals()arg
+            new_instance = globals()[arg]
             new_instance.save()
             print(new_instance.id)
         else:
