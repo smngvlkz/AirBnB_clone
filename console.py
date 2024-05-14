@@ -47,6 +47,9 @@ class HBNBCommand(cmd.Cmd):
             return
         if len(inputs) > 1:
             command = inputs[1]
+            if command.startswith("show(\"") and command.endswith("\")"):
+                id = command[6:-2]
+                self.do_show(class_name + " " + id)
             if command == "all()":
                 self.do_all(class_name)
             elif command == "count()":
