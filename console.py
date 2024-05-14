@@ -2,6 +2,11 @@
 import cmd
 from models import storage
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
@@ -9,6 +14,7 @@ class HBNBCommand(cmd.Cmd):
     HBNBCommand class.
     """
     prompt = '(hbnb) '
+    valid_classes = ["BaseModel", "User", "Place", "State", "City", "Amenity", "Review"]
 
     def do_quit(self, arg):
         """
@@ -34,12 +40,8 @@ class HBNBCommand(cmd.Cmd):
         """
         if not arg:
             print("** class name missing **")
-        elif arg == "BaseModel":
-            new_instance = BaseModel()
-            new_instance.save()
-            print(new_instance.id)
-        elif arg == "User":
-            new_instance = User()
+        elif arg in self.valid_classes:
+            new_instance = globals()arg
             new_instance.save()
             print(new_instance.id)
         else:
@@ -52,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in self.valid_classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -71,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in self.valid_classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
@@ -88,7 +90,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Prints all string representation of all instances based or not on the class name.
         """
-        if arg and arg != "BaseModel":
+        if arg and arg not in self.valid_classes:
             print("** class doesn't exist **")
         else:
             all_objs = storage.all()
@@ -104,7 +106,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] != "BaseModel":
+        elif args[0] not in self.valid_classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
