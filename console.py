@@ -53,6 +53,11 @@ class HBNBCommand(cmd.Cmd):
             elif command.startswith("destroy(\"") and command.endswith("\")"):
                 id = command[9:-2]
                 self.do_destroy(class_name + " " + id)
+            elif command.startswith("update(\"") and command.endswith("\")"):
+                id, attribute_name, attribute_value = command[8:-2].split("\", \"")
+                if attribute_value.isdigit():
+                    attribute_value = int(attribute_value)
+                self.do_update(class_name + " " + id + " " + attribute_name + " " + str(attribute_value))
             if command == "all()":
                 self.do_all(class_name)
             elif command == "count()":
@@ -155,8 +160,18 @@ class HBNBCommand(cmd.Cmd):
             if key not in all_objs:
                 print("** no instance found **")
             else:
-                setattr(all_objs[key], args[2], args[3])
+                value = args[3].strip("\"'")
+                try:
+                    casted_value = int(value)
+                except ValueError:
+                    try:
+                        casted_value = float(value)
+                    except ValueError:
+                        casted_value = value
+
+                setattr(all_objs[key], args[2], casted_value)
                 all_objs[key].save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
+
