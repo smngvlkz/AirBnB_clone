@@ -48,4 +48,8 @@ class FileStorage:
                     cls_name = v['__class__']
                     if cls_name in globals():
                         cls = globals()[cls_name]
-                        self.__objects[k] = cls(**v)
+                        if k in self.__objects:
+                            self.__objects[k].__dict__.update(v)
+                        else:
+                            self.__objects[k] = cls(**v)
+

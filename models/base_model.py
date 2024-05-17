@@ -24,10 +24,11 @@ class BaseModel:
                 self.id = str(uuid.uuid4())
             if "created_at" not in kwargs:
                 self.created_at = datetime.now()
-            self.updated_at = datetime.now()
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()
+
+
 
     def __str__(self):
         """
@@ -41,8 +42,12 @@ class BaseModel:
         """
         from models import storage
         self.updated_at = datetime.now()
+        for attr, value in self.__dict__.items():
+            setattr(self, attr, value)
         storage.new(self)
         storage.save()
+
+
 
     def to_dict(self):
         """

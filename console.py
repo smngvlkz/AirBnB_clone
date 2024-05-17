@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import cmd
+import re
 from models import storage
 from models.user import User
 from models.place import Place
@@ -34,45 +35,36 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
+
     def default(self, line):
         """
         Method to be called when the command prefix is not recognized on an input line
         """
         if len(line) == 0:
             return
-        inputs = line.split('.')
-        class_name = inputs[0]
-        if class_name not in self.valid_classes:
-            print("** class doesn't exist **")
-            return
-        if len(inputs) > 1:
-            command = inputs[1]
-            if command.startswith("show(\"") and command.endswith("\")"):
-                id = command[6:-2]
+        match = re.match(r'(\w+)\.(\w+)\("([^"]*)"\)', line)
+        if match:
+            class_name, command, id = match.groups()
+            if class_name not in self.valid_classes:
+                print("** class doesn't exist **")
+                return
+            if command == "show":
                 self.do_show(class_name + " " + id)
-            elif command.startswith("destroy(\"") and command.endswith("\")"):
-                id = command[9:-2]
+            elif command == "destroy":
                 self.do_destroy(class_name + " " + id)
-            elif command.startswith("update(\"") and command.endswith("\")"):
-                id, attribute_name, attribute_value = command[8:-2].split("\", \"")
-                if attribute_value.isdigit():
-                    attribute_value = int(attribute_value)
-                self.do_update(class_name + " " + id + " " + attribute_name + " " + str(attribute_value))
-            if command == "all()":
-                self.do_all(class_name)
-            elif command == "count()":
-                self.do_count(class_name)
-
-    def do_count(self, arg):
-        """
-        To count the number of instances of a class
-        """
-        count = 0
-        all_objs = storage.all()
-        for obj_id in all_objs:
-            if arg == obj_id.split(".")[0]:
-                count += 1
-        print(count)
+        else:
+            match = re.match(r'(\w+)\.(\w+)\("([^"]*)", "([^"]*)", ([^)]*)\)', line)
+            if match:
+                class_name, command, id, attribute_name, attribute_value = match.groups()
+                if class_name not in self.valid_classes:
+                    print("** class doesn't exist **")
+                    return
+                if command == "update":
+                    if attribute_value.isdigit():
+                        attribute_value = int(attribute_value)
+                    self.do_update(class_name + " " + id + " " + attribute_name + " " + str(attribute_value))
+            else:
+                print("** command not recognized **")
 
     def do_create(self, arg):
         """
@@ -140,8 +132,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """
-        Updates an instance based on the class name and id by adding or updating attribute (save
-        the change into the JSON file).
+        Updates an instance based on the class name and id by adding or updating attribute.
         """
         args = arg.split()
         if len(args) == 0:
@@ -150,29 +141,31 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
-        elif len(args) == 2:
-            print("** attribute name missing **")
-        elif len(args) == 3:
-            print("** value missing **")
         else:
-            all_objs = storage.all()
             key = args[0] + "." + args[1]
+            all_objs = storage.all()
             if key not in all_objs:
                 print("** no instance found **")
+            elif len(args) == 2:
+                print("** attribute name missing **")
+            elif len(args) == 3:
+                print("** value missing **")
             else:
-                value = args[3].strip("\"'")
+                obj = all_objs[key]
                 try:
-                    casted_value = int(value)
-                except ValueError:
+                    attr_type = type(getattr(obj, args[2]))
+                    value = attr_type(args[3])
+                except AttributeError:
                     try:
-                        casted_value = float(value)
+                        value = int(args[3])
                     except ValueError:
-                        casted_value = value
-
-                setattr(all_objs[key], args[2], casted_value)
-                all_objs[key].save()
+                        try:
+                            value = float(args[3])
+                        except ValueError:
+                            value = str(args[3])
+                setattr(obj, args[2], value)
+                obj.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
 
