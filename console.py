@@ -53,16 +53,22 @@ class HBNBCommand(cmd.Cmd):
             elif command == "destroy":
                 self.do_destroy(class_name + " " + id)
         else:
-            match = re.match(r'(\w+)\.(\w+)\("([^"]*)", "([^"]*)", ([^)]*)\)', line)
+            match = re.match(r'(\w+)\.(\w+)\("([^"]*)", ({.*})\)', line)
             if match:
-                class_name, command, id, attribute_name, attribute_value = match.groups()
+                class_name, command, id, attribute_dict = match.groups()
                 if class_name not in self.valid_classes:
                     print("** class doesn't exist **")
                     return
                 if command == "update":
-                    if attribute_value.isdigit():
-                        attribute_value = int(attribute_value)
-                    self.do_update(class_name + " " + id + " " + attribute_name + " " + str(attribute_value))
+                    try:
+                        attribute_dict = eval(attribute_dict)
+                        if not isinstance(attribute_dict, dict):
+                            raise Exception()
+                    except:
+                        print("** attribute dictionary is invalid **")
+                        return
+                    for attribute_name, attribute_value in attribute_dict.items():
+                        self.do_update(class_name + " " + id + " " + attribute_name + " " + str(attribute_value))
             else:
                 print("** command not recognized **")
 
