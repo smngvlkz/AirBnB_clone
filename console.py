@@ -79,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
         elif arg in self.valid_classes:
-            new_instance = globals()[arg]
+            new_instance = globals()[arg]()
             new_instance.save()
             print(new_instance.id)
         else:
