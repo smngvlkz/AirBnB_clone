@@ -1,16 +1,26 @@
-.places {
-  margin-top: 20px;
-}
-
 .places h1 {
   font-size: 30px;
   text-align: left;
   margin-left: 20px;
+  margin-top: 20px;
+  padding-top: 0;
+}
+
+.places-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.places .row {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
 }
 
 .places article {
   width: 390px;
-  padding: 20px;
+  padding: 8px;
   margin: 20px;
   border: 1px solid #ff5a5f;
   border-radius: 4px;
