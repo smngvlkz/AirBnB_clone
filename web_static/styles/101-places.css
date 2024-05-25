@@ -16,6 +16,7 @@
   display: flex;
   justify-content: space-between;
   width: 90%;
+  flex-wrap: wrap;
 }
 
 .places article {
@@ -24,6 +25,7 @@
   margin: 20px;
   border: 1px solid #ff5a5f;
   border-radius: 4px;
+  flex: 1 0 auto;
 }
 
 .places h2 {
@@ -77,13 +79,18 @@
 }
 
 .amenities {
-  margin-top: 40px;
   border: none;
+}
+
+.amenities-margin {
+  margin-top: 40px;
 }
 
 .amenities h2 {
   font-size: 16px;
   border-bottom: 1px solid #dddddd;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
 .amenities-list {
