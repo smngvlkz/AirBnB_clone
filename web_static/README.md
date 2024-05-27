@@ -6,8 +6,11 @@ This project is an AirBnB clone, focusing on creating a responsive and visually 
 The AirBnB Clone project aims to create a user-friendly interface for searching and browsing available places. It includes the following features:
 
 **Header and Footer**: A consistent header and footer design across all pages.
+
 **Filters Box**: A filter section with dropdown menus for locations and amenities.
+
 **Search Button**: A search button to trigger the search functionality.
+
 **Results Section**: A listing of available places with relevant details.
 
 ## Requirements
