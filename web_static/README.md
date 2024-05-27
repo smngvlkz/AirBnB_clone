@@ -15,8 +15,13 @@ The AirBnB Clone project aims to create a user-friendly interface for searching 
 
 ## Requirements
 The project adheres to W3C standards and validates using the W3C Validator.
+
 CSS files are organized in the styles folder.
+
 Images are stored in the images folder.
+
 No use of !important or IDs in CSS.
+
 No use of <img>, <embed>, or <iframe> tags.
+
 Compatibility with Chrome 56 or later.
