@@ -1,0 +1,188 @@
+/* Heading for places section */
+.places h1 {
+  font-size: 30px;
+  text-align: left;
+  margin-left: 20px;
+  margin-top: 20px;
+  padding-top: 0;
+}
+
+/* Container for places */
+.places-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Row of places */
+.places .row {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  flex-wrap: wrap;
+}
+
+/* Individual place article */
+.places article {
+  width: 390px;
+  padding: 8px;
+  margin: 20px;
+  border: 1px solid #ff5a5f;
+  border-radius: 4px;
+  flex: 1 0 auto;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 600px) {
+  .places .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .places article {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+/* Heading for individual place */
+.places h2 {
+  font-size: 30px;
+  text-align: center;
+}
+
+/* Header within place article */
+.places .header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Price by night badge */
+.price_by_night {
+  color: #ff5a5f;
+  border: 4px solid #ff5a5f;
+  border-radius: 50%;
+  min-width: 60px;
+  height: 60px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Information section within place article */
+.information {
+  height: 80px;
+  border-top: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Individual information items */
+.max_guest,
+.number_rooms,
+.number_bathrooms {
+  width: 100px;
+  display: flex;
+  align-items: center;
+}
+
+/* User information */
+.user {
+  font-weight: bold;
+  padding: 10px;
+}
+
+/* Description section */
+.description {
+  padding: 10px;
+}
+
+/* Amenities section */
+.amenities {
+  border: none;
+}
+
+/* Margin for amenities section */
+.amenities-margin {
+  margin-top: 40px;
+}
+
+/* Amenities heading */
+.amenities h2 {
+  font-size: 16px;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+/* List of amenities */
+.amenities-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* Individual amenity item */
+.amenities-list li {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Reviews section */
+.reviews {
+  margin-top: 40px;
+}
+
+/* Reviews heading */
+.reviews h2 {
+  font-size: 16px;
+  border-bottom: 1px solid #dddddd;
+  text-align: left;
+}
+
+/* List of reviews */
+.reviews ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Individual review item */
+.reviews ul li {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+/* Review author name */
+.reviews ul li h3 {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Icon styles */
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* Pet-friendly icon */
+.pet-friendly {
+  background: url("../images/icon_pets.png") no-repeat center center / contain;
+}
+
+/* TV icon */
+.tv {
+  background: url("../images/icon_tv.png") no-repeat center center / contain;
+}
+
+/* WiFi icon */
+.wifi {
+  background: url("../images/icon_wifi.png") no-repeat center center / contain;
+}
